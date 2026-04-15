@@ -66,30 +66,33 @@
 
 \begin{tikzpicture}
   \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
-  \node[
-   xshift=+0\paperwidth,yshift=-.73\paperheight
-   ] at (current page.north)
-   {
-     \includegraphics[height=0.15\paperheight]{qatplate/img/qat.png}
-   };
-  \node[
-   xshift=-0.2\paperwidth,yshift=-.9\paperheight
-   ] at (current page.north)
-   {
-     \includegraphics[height=0.1\paperheight]{qatplate/img/ens.jpg}
-   };
-  \node[
-   xshift=+0\paperwidth,yshift=-.9\paperheight
-   ] at (current page.north)
-   {
-     \includegraphics[height=0.1\paperheight]{qatplate/img/cnrs.png}
-   };
-  \node[
-   xshift=+0.2\paperwidth,yshift=-.9\paperheight
-   ] at (current page.north)
-   {
-     \includegraphics[height=0.1\paperheight]{qatplate/img/inria.pdf}
-   };
+
+  % Title page background image (page 1 only)
+  \ifnum\thepage=1\relax%
+    \node[anchor=south west, inner sep=0pt, opacity=0.55] at (0,0)
+      {\includegraphics[width=\paperwidth,keepaspectratio=true]{qatplate/img/magic-blindness.png}};%
+  \fi
+
+  % --- Logo row parameters (tune these) ---
+  \def\logoYfrac{0.85}%      distance from top as fraction of \paperheight
+  \def\logoSpacing{0.22}%   gap between logos as fraction of \paperwidth
+  \def\logoHfrac{0.15}%     logo height as fraction of \paperheight
+  % -----------------------------------------
+
+  % Precompute x-positions (pgfmathsetmacro gives plain numbers, safe in xshift)
+  \pgfmathsetmacro{\logoXa}{-1.5*\logoSpacing}%
+  \pgfmathsetmacro{\logoXb}{-0.5*\logoSpacing}%
+  \pgfmathsetmacro{\logoXc}{ 0.5*\logoSpacing}%
+  \pgfmathsetmacro{\logoXd}{ 1.5*\logoSpacing}%
+
+  \node[xshift=\logoXa\paperwidth, yshift=-\logoYfrac\paperheight] at (current page.north)
+    {\includegraphics[height=\logoHfrac\paperheight]{qatplate/img/logo_ens_psl_en_png.png}};
+  \node[xshift=\logoXb\paperwidth, yshift=-\logoYfrac\paperheight] at (current page.north)
+    {\includegraphics[height=\logoHfrac\paperheight]{qatplate/img/cnrs.png}};
+  \node[xshift=\logoXc\paperwidth, yshift=-\logoYfrac\paperheight] at (current page.north)
+    {\includegraphics[height=\logoHfrac\paperheight]{qatplate/img/qat.png}};
+  \node[xshift=\logoXd\paperwidth, yshift=-\logoYfrac\paperheight] at (current page.north)
+    {\includegraphics[height=\logoHfrac\paperheight]{qatplate/img/inria.pdf}};
 
   %  \node[
   %  xshift=-0.2\paperwidth,yshift=-.9\paperheight
